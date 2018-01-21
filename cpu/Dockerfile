@@ -31,7 +31,8 @@ MAINTAINER Arjun Sreekumar <ajsrk1207@gmail.com>
 #       13. conda install -c conda-forge matplotlib numpy pandas scipy
 # Mayavi Dependencies - 
 #       1. mesa-utils
-#       2. gtk3.0
+#       2. libglu1-mesa
+#       3. libqtgui4
 
 ENV LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 LANGUAGE=en_US.UTF-8
 
@@ -39,7 +40,7 @@ ENV PATH /opt/conda/bin:$PATH
 
 RUN apt-get update --fix-missing && \
    apt-get install -y --no-install-recommends wget bzip2 ca-certificates \
-   gtk3.0 \
+   mesa-utils libglu1-mesa libqtgui4 \
    git mercurial subversion \
    build-essential cmake curl vim ca-certificates \
    libjpeg-dev libpng-dev \
@@ -53,7 +54,11 @@ RUN apt-get update --fix-missing && \
    rm ~/miniconda.sh &&\
    \
    apt-get clean &&\
-   conda install --file conda_environment.txt &&\
+   conda install -y -c conda-forge numpy pandas matplotlib scipy scikit-learn scikit-image qt vtk pyvtk pyside envisage mayavi && \
+   conda install -y -c ajsrk traitsui && \
+   conda install -y -c menpo opencv3 && \
+   conda install -y pyyaml pip mkl jupyter Pillow h5py && \
+   conda install -y -c pytorch pytorch torchvision && \
    pip --no-cache-dir install \
    https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-1.4.1-cp36-cp36m-linux_x86_64.whl
 
