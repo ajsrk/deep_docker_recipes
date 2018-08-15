@@ -55,17 +55,17 @@ RUN echo "deb http://developer.download.nvidia.com/compute/machine-learning/repo
     rm -rf /var/lib/apt/lists/* && \
     \
     echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
-    wget --quiet https://repo.continuum.io/miniconda/Miniconda3-4.3.30-Linux-x86_64.sh -O ~/miniconda.sh && \
+    wget --quiet https://repo.continuum.io/miniconda/Miniconda3-4.5.4-Linux-x86_64.sh -O ~/miniconda.sh && \
     /bin/bash ~/miniconda.sh -b -p /opt/conda && \
     rm ~/miniconda.sh &&\
     \
     apt-get clean &&\ 
     conda install -y -c conda-forge numpy pandas matplotlib scipy scikit-learn scikit-image qt vtk pyvtk pyside envisage traitsui mayavi tensorboardx && \
-    conda install -c menpo opencv3 && \
-    conda install pyyaml pip mkl jupyter Pillow h5py && \
+    conda install -y -c menpo opencv3 && \
+    conda install -y pyyaml pip mkl jupyter Pillow h5py && \
     conda install -y pytorch torchvision cuda92 -c pytorch && \
     pip --no-cache-dir install \
-    https://storage.googleapis.com/tensorflow/linux/gpu/tensorflow_gpu-1.4.1-cp36-cp36m-linux_x86_64.whl
+    https://storage.googleapis.com/tensorflow/linux/gpu/tensorflow_gpu-1.10.0-cp36-cp36m-linux_x86_64.whl
 
 
 CMD [ "/bin/bash" ]
