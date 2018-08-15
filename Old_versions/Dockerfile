@@ -60,10 +60,11 @@ RUN echo "deb http://developer.download.nvidia.com/compute/machine-learning/repo
     rm ~/miniconda.sh &&\
     \
     apt-get clean &&\ 
-    conda install -y -c conda-forge numpy pandas matplotlib scipy scikit-learn scikit-image qt vtk pyvtk pyside envisage traitsui mayavi tensorboardx && \
+    conda install -y -c conda-forge numpy pandas matplotlib scipy scikit-learn scikit-image qt vtk pyvtk pyside envisage mayavi && \
+    conda install -y -c ajsrk traitsui && \
     conda install -c menpo opencv3 && \
     conda install pyyaml pip mkl jupyter Pillow h5py && \
-    conda install -y pytorch torchvision cuda92 -c pytorch && \
+    conda install -y pytorch torchvision cuda90 magma-cuda90 -c pytorch && \
     pip --no-cache-dir install \
     https://storage.googleapis.com/tensorflow/linux/gpu/tensorflow_gpu-1.4.1-cp36-cp36m-linux_x86_64.whl
 
