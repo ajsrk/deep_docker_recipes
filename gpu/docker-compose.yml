@@ -1,0 +1,17 @@
+version: '2.3'
+
+services:
+
+    DeepLearning:
+        image: sharkfeed/deep_learning:deep_ml
+        environment:
+          - DISPLAY
+          - QT_X11_NO_MITSHM=1
+        volumes:
+          - $HOME/.Xauthority:/root/.Xauthority:rw
+        devices:
+          - /dev/dri:/dev/dri
+        runtime:
+            nvidia
+
+
