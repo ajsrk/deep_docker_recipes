@@ -9,6 +9,8 @@ services:
           - QT_X11_NO_MITSHM=1
         volumes:
           - $HOME/.Xauthority:/root/.Xauthority:rw
+          - ~/PycharmProjects:/root/PycharmProjects
+          - ~/.PyCharm40:/root/.PyCharm40
         devices:
           - /dev/dri:/dev/dri
         runtime:
