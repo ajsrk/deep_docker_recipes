@@ -86,6 +86,7 @@ RUN echo "deb http://developer.download.nvidia.com/compute/machine-learning/repo
     pip install pycocotools==2.0.0 &&\
     wget https://download.jetbrains.com/python/pycharm-community-2018.2.tar.gz -O /tmp/pycharm.tar.gz &&\
     mkdir ${PYCHARM_HOME} && tar -xzvf /tmp/pycharm.tar.gz -C ${PYCHARM_HOME} --strip=1 && \
+    echo 'alias pycharm="/etc/pycharm/bin/pycharm.sh"' >> ~/.bashrc && \
     rm -rf /var/lib/apt-lists; rm -rf /tmp/*; apt-get purge wget -y; apt-get autoremove -y
 
 CMD [ "/bin/bash" ]
