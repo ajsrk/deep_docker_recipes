@@ -46,7 +46,7 @@ ENV PYCHARM_HOME=/etc/pycharm
 
 ENV PYCHARM=/etc/pycharm/bin/pycharm.sh
 
-ENV CUDNN_VERSION 7.2.1.38
+ENV CUDNN_VERSION 7.4.1.5
 
 LABEL com.nvidia.cudnn.version="${CUDNN_VERSION}"
 
@@ -57,11 +57,12 @@ ADD . /
 RUN echo "deb http://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1604/x86_64 /" > \ 
     /etc/apt/sources.list.d/nvidia-ml.list && \
     apt-get update --fix-missing && \
-    apt-get install -y --no-install-recommends wget=1.17.1-1ubuntu1.4 bzip2=1.0.6-8 ca-certificates=20170717~16.04.1 \
+    apt-get install -y --no-install-recommends --allow-change-held-packages \
+    wget=1.17.1-1ubuntu1.4 bzip2=1.0.6-8 ca-certificates=20170717~16.04.1 \
     mesa-utils=8.3.0-1 libglu1-mesa=9.0.0-2.1 libqtgui4=4:4.8.7+dfsg-5ubuntu2 \
-    git=1:2.7.4-0ubuntu1.4 \
-    build-essential=12.1ubuntu2 cmake=3.5.1-1ubuntu3 curl=7.47.0-1ubuntu2.9 vim=2:7.4.1689-3ubuntu1.2 \
-    libnccl2=2.2.13-1+cuda9.0 libnccl-dev=2.2.13-1+cuda9.0 libjpeg-dev=8c-2ubuntu8 libpng12-dev=1.2.54-1ubuntu1.1 \
+    git=1:2.7.4-0ubuntu1.6 \
+    build-essential=12.1ubuntu2 cmake=3.5.1-1ubuntu3 curl=7.47.0-1ubuntu2.11 vim=2:7.4.1689-3ubuntu1.2 \
+    libnccl2=2.3.7-1+cuda9.0 libnccl-dev=2.3.7-1+cuda9.0 libjpeg-dev=8c-2ubuntu8 libpng12-dev=1.2.54-1ubuntu1.1 \
     libfreetype6-dev=2.6.1-0.1ubuntu2.3 libzmq3-dev=4.1.4-7 pkg-config=0.29.1-0ubuntu1 python-dev=2.7.12-1~16.04 \
     rsync=3.1.1-3ubuntu1.2 software-properties-common=0.96.20.7 unzip=6.0-20ubuntu1 libxtst6 \
     locales=2.23-0ubuntu10 \

@@ -4,16 +4,19 @@ services:
 
     DeepLearning:
         image: sharkfeed/deep_learning:deep_ml
+        entrypoint: /bin/sh
+        user: root
+        stdin_open: true
+        tty: true
         environment:
           - DISPLAY
           - QT_X11_NO_MITSHM=1
         volumes:
           - $HOME/.Xauthority:/root/.Xauthority:rw
-          - ~/PycharmProjects:/root/PycharmProjects
-          - ~/.PyCharm40:/root/.PyCharm40
+          - $HOME/.PyCharm40:/root/.PyCharm40
+          - $HOME/jupyterlab_projects:/home/jupyterlab_projects
+          - $HOME/Datasets:/home/Datasets
         devices:
           - /dev/dri:/dev/dri
         runtime:
             nvidia
-
-
