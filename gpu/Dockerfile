@@ -88,7 +88,10 @@ RUN echo "deb http://developer.download.nvidia.com/compute/machine-learning/repo
     wget https://download.jetbrains.com/python/pycharm-community-2018.2.tar.gz -O /tmp/pycharm.tar.gz &&\
     mkdir ${PYCHARM_HOME} && tar -xzvf /tmp/pycharm.tar.gz -C ${PYCHARM_HOME} --strip=1 && \
     echo 'alias pycharm="/etc/pycharm/bin/pycharm.sh"' >> ~/.bashrc && \
-    rm -rf /var/lib/apt-lists; rm -rf /tmp/*; apt-get purge wget -y; apt-get autoremove -y
+    rm -rf /var/lib/apt-lists; rm -rf /tmp/*; apt-get purge wget -y; apt-get autoremove -y &&\
+    jupyter lab --generate-config &&\
+    echo "c.NotebookApp.allow_origin = '*'" >> /home/.jupyter/jupyter_notebook_config.py &&\
+    echo "c.NotebookApp.allow_root = True" >> /home/.jupyter/jupyter_notebook_config.py
 
 CMD [ "/bin/bash" ]
 

@@ -59,7 +59,10 @@ RUN apt-get update --fix-missing && \
    conda install -y pyyaml pip mkl jupyter Pillow h5py && \
    conda install -y pytorch torchvision -c pytorch && \
    pip --no-cache-dir install \
-   https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-1.10.0-cp36-cp36m-linux_x86_64.whl
+   https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-1.10.0-cp36-cp36m-linux_x86_64.whl &&\
+   jupyter lab --generate-config &&\
+   echo "c.NotebookApp.allow_origin = '*'" >> /home/.jupyter/jupyter_notebook_config.py &&\
+   echo "c.NotebookApp.allow_root = True" >> /home/.jupyter/jupyter_notebook_config.py
 
 
 CMD [ "/bin/bash" ]
