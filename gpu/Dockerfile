@@ -61,10 +61,10 @@ RUN echo "deb http://developer.download.nvidia.com/compute/machine-learning/repo
     wget=1.17.1-1ubuntu1.4 bzip2=1.0.6-8 ca-certificates=20170717~16.04.1 \
     mesa-utils=8.3.0-1 libglu1-mesa=9.0.0-2.1 libqtgui4=4:4.8.7+dfsg-5ubuntu2 \
     git=1:2.7.4-0ubuntu1.6 \
-    build-essential=12.1ubuntu2 cmake=3.5.1-1ubuntu3 curl=7.47.0-1ubuntu2.11 vim=2:7.4.1689-3ubuntu1.2 \
+    build-essential=12.1ubuntu2 cmake=3.5.1-1ubuntu3 curl=7.47.0-1ubuntu2.12 vim=2:7.4.1689-3ubuntu1.2 \
     libnccl2=2.3.7-1+cuda9.0 libnccl-dev=2.3.7-1+cuda9.0 libjpeg-dev=8c-2ubuntu8 libpng12-dev=1.2.54-1ubuntu1.1 \
     libfreetype6-dev=2.6.1-0.1ubuntu2.3 libzmq3-dev=4.1.4-7 pkg-config=0.29.1-0ubuntu1 python-dev=2.7.12-1~16.04 \
-    rsync=3.1.1-3ubuntu1.2 software-properties-common=0.96.20.7 unzip=6.0-20ubuntu1 libxtst6 \
+    rsync=3.1.1-3ubuntu1.2 software-properties-common=0.96.20.8 unzip=6.0-20ubuntu1 libxtst6 \
     locales=2.23-0ubuntu10 \
     libcudnn7=$CUDNN_VERSION-1+cuda9.0 && \
     apt-mark hold libcudnn7 && \
@@ -88,10 +88,9 @@ RUN echo "deb http://developer.download.nvidia.com/compute/machine-learning/repo
     wget https://download.jetbrains.com/python/pycharm-community-2018.2.tar.gz -O /tmp/pycharm.tar.gz &&\
     mkdir ${PYCHARM_HOME} && tar -xzvf /tmp/pycharm.tar.gz -C ${PYCHARM_HOME} --strip=1 && \
     echo 'alias pycharm="/etc/pycharm/bin/pycharm.sh"' >> ~/.bashrc && \
-    rm -rf /var/lib/apt-lists; rm -rf /tmp/*; apt-get purge wget -y; apt-get autoremove -y &&\
-    jupyter lab --generate-config &&\
-    echo "c.NotebookApp.allow_origin = '*'" >> /home/.jupyter/jupyter_notebook_config.py &&\
-    echo "c.NotebookApp.allow_root = True" >> /home/.jupyter/jupyter_notebook_config.py
+    rm -rf /var/lib/apt-lists; rm -rf /tmp/*; apt-get purge wget -y; apt-get autoremove -y
+
+COPY jupyter_notebook_config.py /home/.jupyter/jupyter_notebook_config.py
 
 CMD [ "/bin/bash" ]
 
