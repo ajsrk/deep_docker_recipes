@@ -25,4 +25,4 @@ lightgbm==2.2.2
 vtk==8.1.1
 pyqt==4.11.4
 mayavi==4.6.2
-hyperopt==0.2
+hyperopt==0.1.2
