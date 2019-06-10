@@ -66,6 +66,7 @@ RUN echo "deb http://developer.download.nvidia.com/compute/machine-learning/repo
     libfreetype6-dev libzmq3-dev pkg-config python-dev \
     rsync software-properties-common unzip libxtst6 \
     locales \
+    sudo \
     libcudnn7=$CUDNN_VERSION-1+cuda9.2 && \
     apt-mark hold libcudnn7 && \
     locale-gen en_US.UTF-8 && \
