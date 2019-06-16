@@ -89,7 +89,6 @@ RUN echo "deb http://developer.download.nvidia.com/compute/machine-learning/repo
     echo 'alias pycharm="/etc/pycharm/bin/pycharm.sh"' >> ~/.bashrc && \
     rm -rf /var/lib/apt-lists; rm -rf /tmp/*; apt-get purge wget -y; apt-get autoremove -y
 
-COPY jupyter_notebook_config.py /home/.jupyter/jupyter_notebook_config.py
 
 # Code-Server
 # Dependencies - bsdstar, openssl, locales, net-tools 
@@ -111,6 +110,8 @@ RUN groupadd -r coder \
     && useradd -m -r coder -g coder -s /bin/bash \
     && echo "coder ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd
 USER coder
+
+COPY jupyter_notebook_config.py /home/.jupyter/jupyter_notebook_config.py
 
 # Setup User Visual Studio Code Extentions
 ENV VSCODE_USER "/home/coder/.local/share/code-server/User"
