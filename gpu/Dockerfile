@@ -54,6 +54,12 @@ EXPOSE 8888
 
 ADD . /
 
+# Setup User
+RUN groupadd -r coder \
+    && useradd -m -r coder -g coder -s /bin/bash \
+    && echo "coder ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd
+USER coder
+
 RUN echo "deb http://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1604/x86_64 /" > \ 
     /etc/apt/sources.list.d/nvidia-ml.list && \
     apt-get update --fix-missing && \
@@ -105,13 +111,7 @@ ENV DISABLE_TELEMETRY true
 ENV CODE_VERSION="1.1119-vsc1.33.1"
 RUN curl -sL https://github.com/cdr/code-server/releases/download/${CODE_VERSION}/code-server${CODE_VERSION}-linux-x64.tar.gz | tar --strip-components=1 -zx -C /usr/local/bin code-server${CODE_VERSION}-linux-x64/code-server
 
-# Setup User
-RUN groupadd -r coder \
-    && useradd -m -r coder -g coder -s /bin/bash \
-    && echo "coder ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd
-USER coder
-
-COPY jupyter_notebook_config.py /home/.jupyter/jupyter_notebook_config.py
+COPY jupyter_notebook_config.py ~/.jupyter/jupyter_notebook_config.py
 
 # Setup User Visual Studio Code Extentions
 ENV VSCODE_USER "/home/coder/.local/share/code-server/User"
