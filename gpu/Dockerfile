@@ -40,7 +40,7 @@ ENV LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 LANGUAGE=en_US.UTF-8
 
 ENV PATH /opt/conda/bin:$PATH
 
-ENV HOME /home
+ENV HOME /home/coder
 
 ENV PYCHARM_HOME=/etc/pycharm
 
