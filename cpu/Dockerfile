@@ -48,12 +48,6 @@ EXPOSE 8888
 
 ADD . /
 
-# Setup User
-RUN groupadd -r coder \
-    && useradd -m -r coder -g coder -s /bin/bash \
-    && echo "coder ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd
-USER coder
-
 RUN apt-get update --fix-missing && \
    apt-get install -y --no-install-recommends wget bzip2 ca-certificates \
    mesa-utils libglu1-mesa libqtgui4 \
@@ -63,9 +57,16 @@ RUN apt-get update --fix-missing && \
    libfreetype6-dev libzmq3-dev pkg-config python-dev rsync software-properties-common unzip libxtst6 \
    locales \
    sudo \
-   locale-gen en_US.UTF-8 && \
-    \   
-    echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
+   locale-gen en_US.UTF-8
+
+# Setup User
+RUN groupadd -r coder \
+    && useradd -m -r coder -g coder -s /bin/bash \
+    && echo "coder ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd
+
+USER coder
+
+RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
     wget --quiet https://repo.continuum.io/miniconda/Miniconda3-4.5.4-Linux-x86_64.sh -O ~/miniconda.sh && \
     /bin/bash ~/miniconda.sh -b -p /opt/conda && \
     rm ~/miniconda.sh &&\

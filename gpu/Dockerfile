@@ -54,11 +54,6 @@ EXPOSE 8888
 
 ADD . /
 
-# Setup User
-RUN groupadd -r coder \
-    && useradd -m -r coder -g coder -s /bin/bash \
-    && echo "coder ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd
-USER coder
 
 RUN echo "deb http://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1604/x86_64 /" > \ 
     /etc/apt/sources.list.d/nvidia-ml.list && \
@@ -75,9 +70,16 @@ RUN echo "deb http://developer.download.nvidia.com/compute/machine-learning/repo
     sudo \
     libcudnn7=$CUDNN_VERSION-1+cuda9.2 && \
     apt-mark hold libcudnn7 && \
-    locale-gen en_US.UTF-8 && \
-    \   
-    echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
+    locale-gen en_US.UTF-8
+
+# Setup User
+RUN groupadd -r coder \
+    && useradd -m -r coder -g coder -s /bin/bash \
+    && echo "coder ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd
+
+USER coder
+   
+RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
     wget --quiet https://repo.continuum.io/miniconda/Miniconda3-4.5.4-Linux-x86_64.sh -O ~/miniconda.sh && \
     /bin/bash ~/miniconda.sh -b -p /opt/conda && \
     rm ~/miniconda.sh &&\
