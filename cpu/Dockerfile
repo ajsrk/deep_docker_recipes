@@ -38,7 +38,7 @@ ENV LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 LANGUAGE=en_US.UTF-8
 
 ENV PATH /opt/conda/bin:$PATH
 
-ENV HOME /home/coder
+ENV HOME /home
 
 ENV PYCHARM_HOME=/etc/pycharm
 
@@ -66,13 +66,6 @@ RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
     \
     apt-get clean
 
-# Setup User
-RUN groupadd -r coder \
-    && useradd -m -r coder -g coder -s /bin/bash \
-    && echo "coder ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd
-
-USER coder
-
 RUN conda config --add channels conda-forge && \
     conda update -n base conda && \
     while read requirement; do conda install --yes -c conda-forge $requirement; done < conda_forge_requirements.txt && \
@@ -84,6 +77,15 @@ RUN conda config --add channels conda-forge && \
     mkdir ${PYCHARM_HOME} && tar -xzvf /tmp/pycharm.tar.gz -C ${PYCHARM_HOME} --strip=1 && \
     echo 'alias pycharm="/etc/pycharm/bin/pycharm.sh"' >> ~/.bashrc && \
     rm -rf /var/lib/apt-lists; rm -rf /tmp/*; apt-get purge wget -y; apt-get autoremove -y
+
+# Setup User
+RUN groupadd -r coder \
+    && useradd -m -r coder -g coder -s /bin/bash \
+    && echo "coder ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd
+
+USER coder
+
+ENV HOME /home/coder
 
 # Code-Server
 # Dependencies - bsdstar, openssl, locales, net-tools 
