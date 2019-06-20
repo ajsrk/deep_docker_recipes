@@ -72,20 +72,22 @@ RUN echo "deb http://developer.download.nvidia.com/compute/machine-learning/repo
     apt-mark hold libcudnn7 && \
     locale-gen en_US.UTF-8
 
-# Setup User
-RUN groupadd -r coder \
-    && useradd -m -r coder -g coder -s /bin/bash \
-    && echo "coder ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd
-
-USER coder
    
 RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
     wget --quiet https://repo.continuum.io/miniconda/Miniconda3-4.5.4-Linux-x86_64.sh -O ~/miniconda.sh && \
     /bin/bash ~/miniconda.sh -b -p /opt/conda && \
     rm ~/miniconda.sh &&\
     \
-    apt-get clean &&\ 
-    conda config --add channels conda-forge && \
+    apt-get clean
+
+# Setup User
+RUN groupadd -r coder \
+    && useradd -m -r coder -g coder -s /bin/bash \
+    && echo "coder ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd
+
+USER coder
+
+RUN conda config --add channels conda-forge && \
     conda update -n base conda && \
     while read requirement; do conda install --yes -c conda-forge $requirement; done < conda_forge_requirements.txt && \
     while read requirement; do conda install --yes -c pytorch $requirement; done < pytorch_requirements.txt && \

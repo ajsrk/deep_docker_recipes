@@ -56,8 +56,15 @@ RUN apt-get update --fix-missing && \
    libjpeg-dev libpng12-dev \
    libfreetype6-dev libzmq3-dev pkg-config python-dev rsync software-properties-common unzip libxtst6 \
    locales \
-   sudo \
+   sudo &&\
    locale-gen en_US.UTF-8
+
+RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
+    wget --quiet https://repo.continuum.io/miniconda/Miniconda3-4.5.4-Linux-x86_64.sh -O ~/miniconda.sh && \
+    /bin/bash ~/miniconda.sh -b -p /opt/conda && \
+    rm ~/miniconda.sh &&\
+    \
+    apt-get clean
 
 # Setup User
 RUN groupadd -r coder \
@@ -66,13 +73,7 @@ RUN groupadd -r coder \
 
 USER coder
 
-RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
-    wget --quiet https://repo.continuum.io/miniconda/Miniconda3-4.5.4-Linux-x86_64.sh -O ~/miniconda.sh && \
-    /bin/bash ~/miniconda.sh -b -p /opt/conda && \
-    rm ~/miniconda.sh &&\
-    \
-    apt-get clean &&\ 
-    conda config --add channels conda-forge && \
+RUN conda config --add channels conda-forge && \
     conda update -n base conda && \
     while read requirement; do conda install --yes -c conda-forge $requirement; done < conda_forge_requirements.txt && \
     while read requirement; do conda install --yes -c pytorch $requirement; done < pytorch_requirements.txt && \
