@@ -92,15 +92,6 @@ RUN conda config --add channels conda-forge && \
     echo 'alias pycharm="/etc/pycharm/bin/pycharm.sh"' >> ~/.bashrc && \
     rm -rf /var/lib/apt-lists; rm -rf /tmp/*; apt-get purge wget -y; apt-get autoremove -y
 
-# Setup User
-RUN groupadd -r coder \
-    && useradd -m -r coder -g coder -s /bin/bash \
-    && echo "coder ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd
-
-USER coder
-
-ENV HOME /home/coder
-
 
 # Code-Server
 # Dependencies - bsdstar, openssl, locales, net-tools 
@@ -111,7 +102,17 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     && rm -rf /var/lib/apt/lists/*
 
 RUN localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
+
 ENV LANG en_US.utf8
+# Setup User
+RUN groupadd -r coder \
+    && useradd -m -r coder -g coder -s /bin/bash \
+    && echo "coder ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd
+
+USER coder
+
+ENV HOME /home/coder
+
 ENV DISABLE_TELEMETRY true
 
 ENV CODE_VERSION="1.1119-vsc1.33.1"
