@@ -104,6 +104,13 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
 RUN localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 
 ENV LANG en_US.utf8
+
+ENV DISABLE_TELEMETRY true
+
+ENV CODE_VERSION="1.1119-vsc1.33.1"
+
+RUN curl -sL https://github.com/cdr/code-server/releases/download/${CODE_VERSION}/code-server${CODE_VERSION}-linux-x64.tar.gz | tar --strip-components=1 -zx -C /usr/local/bin code-server${CODE_VERSION}-linux-x64/code-server
+
 # Setup User
 RUN groupadd -r coder \
     && useradd -m -r coder -g coder -s /bin/bash \
@@ -112,11 +119,6 @@ RUN groupadd -r coder \
 USER coder
 
 ENV HOME /home/coder
-
-ENV DISABLE_TELEMETRY true
-
-ENV CODE_VERSION="1.1119-vsc1.33.1"
-RUN curl -sL https://github.com/cdr/code-server/releases/download/${CODE_VERSION}/code-server${CODE_VERSION}-linux-x64.tar.gz | tar --strip-components=1 -zx -C /usr/local/bin code-server${CODE_VERSION}-linux-x64/code-server
 
 COPY jupyter_notebook_config.py ~/.jupyter/jupyter_notebook_config.py
 
