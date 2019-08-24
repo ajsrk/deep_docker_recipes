@@ -116,8 +116,8 @@ ENV CODE_VERSION="1.1119-vsc1.33.1"
 RUN curl -sL https://github.com/cdr/code-server/releases/download/${CODE_VERSION}/code-server${CODE_VERSION}-linux-x64.tar.gz | tar --strip-components=1 -zx -C /usr/local/bin code-server${CODE_VERSION}-linux-x64/code-server
 
 # Setup User
-RUN groupadd -r coder \
-    && useradd -m -r coder -u $UID -g $GID -s /bin/bash \
+RUN groupadd -g $GID -r coder \
+    && useradd -m -r coder -u $UID -g coder -s /bin/bash \
     && echo "coder ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd
 
 USER coder
