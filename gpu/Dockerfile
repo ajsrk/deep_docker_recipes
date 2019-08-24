@@ -36,6 +36,10 @@ MAINTAINER Arjun Sreekumar <ajsrk1207@gmail.com>
 # PyCharm Dependencies -
 #       1. libxtst6
 
+ARG UID=1000
+
+ARG GID=1000
+
 ENV LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 LANGUAGE=en_US.UTF-8
 
 ENV PATH /opt/conda/bin:$PATH
@@ -113,7 +117,7 @@ RUN curl -sL https://github.com/cdr/code-server/releases/download/${CODE_VERSION
 
 # Setup User
 RUN groupadd -r coder \
-    && useradd -m -r coder -g coder -s /bin/bash \
+    && useradd -m -r coder -u $UID -g $GID -s /bin/bash \
     && echo "coder ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/nopasswd
 
 USER coder
