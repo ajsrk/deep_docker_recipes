@@ -36,6 +36,11 @@ MAINTAINER Arjun Sreekumar <ajsrk1207@gmail.com>
 # PyCharm Dependencies -
 #       1. libxtst6
 
+#ARG MINICONDA_VERSION=Miniconda3-4.5.4-Linux-x86_64.sh
+ARG MINICONDA_VERSION=Miniconda3-4.7.10-Linux-x86_64.sh
+
+ARG VSCODE_PYTHON_EXTENSION_VERSION=2019.6.22090
+
 ARG UID=1000
 
 ARG GID=1000
@@ -78,12 +83,13 @@ RUN echo "deb http://developer.download.nvidia.com/compute/machine-learning/repo
 
    
 RUN echo 'export PATH=/opt/conda/bin:$PATH' > /etc/profile.d/conda.sh && \
-    wget --quiet https://repo.continuum.io/miniconda/Miniconda3-4.5.4-Linux-x86_64.sh -O ~/miniconda.sh && \
+    wget --quiet https://repo.continuum.io/miniconda/${MINICONDA_VERSION} -O ~/miniconda.sh && \
     /bin/bash ~/miniconda.sh -b -p /opt/conda && \
     rm ~/miniconda.sh &&\
     \
     apt-get clean
 
+    #RUN conda config --add pinned_packages defaults::conda && \
 RUN conda config --add channels conda-forge && \
     conda update -n base conda && \
     while read requirement; do conda install --yes -c conda-forge $requirement; done < conda_forge_requirements.txt && \
@@ -111,7 +117,8 @@ ENV LANG en_US.utf8
 
 ENV DISABLE_TELEMETRY true
 
-ENV CODE_VERSION="1.1119-vsc1.33.1"
+#ENV CODE_VERSION="1.1119-vsc1.33.1"
+ENV CODE_VERSION="1.1156-vsc1.33.1"
 
 RUN curl -sL https://github.com/cdr/code-server/releases/download/${CODE_VERSION}/code-server${CODE_VERSION}-linux-x64.tar.gz | tar --strip-components=1 -zx -C /usr/local/bin code-server${CODE_VERSION}-linux-x64/code-server
 
@@ -135,7 +142,8 @@ COPY --chown=coder:coder settings.json /home/coder/.local/share/code-server/User
 
 # Setup Python Extension
 RUN mkdir -p ${VSCODE_EXTENSIONS}/python \
-    && curl -JLs --retry 5 https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-python/vsextensions/python/latest/vspackage | bsdtar --strip-components=1 -xf - -C ${VSCODE_EXTENSIONS}/python extension
+    && curl -JLs --retry 5 https://marketplace.visualstudio.com/_apis/public/gallery/publishers/ms-python/vsextensions/python/${VSCODE_PYTHON_EXTENSION_VERSION}/vspackage | bsdtar --strip-components=1 -xf - -C ${VSCODE_EXTENSIONS}/python extension
+
 
 # Setup User Workspace
 RUN mkdir -p /home/coder/project
