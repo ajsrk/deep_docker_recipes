@@ -80,8 +80,7 @@ RUN conda config --add channels conda-forge && \
     conda update -n base conda && \
     while read requirement; do conda install --yes -c conda-forge $requirement; done < conda_forge_requirements.txt && \
     while read requirement; do conda install --yes -c pytorch $requirement; done < pytorch_requirements.txt && \
-    pip --no-cache-dir install \
-       https://storage.googleapis.com/tensorflow/linux/cpu/tensorflow-1.10.0-cp36-cp36m-linux_x86_64.whl && \
+    pip install tensorflow && \
     pip install pycocotools==2.0.0 &&\
     wget https://download.jetbrains.com/python/pycharm-community-2018.2.tar.gz -O /tmp/pycharm.tar.gz &&\
     mkdir ${PYCHARM_HOME} && tar -xzvf /tmp/pycharm.tar.gz -C ${PYCHARM_HOME} --strip=1 && \
