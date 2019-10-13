@@ -96,6 +96,7 @@ RUN conda config --add channels conda-forge && \
     while read requirement; do conda install --yes -c pytorch $requirement; done < pytorch_requirements.txt && \
     pip install tensorflow-gpu && \
     pip install pycocotools==2.0.0 &&\
+    pip install torchsummary &&\
     wget https://download.jetbrains.com/python/pycharm-community-2018.2.tar.gz -O /tmp/pycharm.tar.gz &&\
     mkdir ${PYCHARM_HOME} && tar -xzvf /tmp/pycharm.tar.gz -C ${PYCHARM_HOME} --strip=1 && \
     echo 'alias pycharm="/etc/pycharm/bin/pycharm.sh"' >> ~/.bashrc && \

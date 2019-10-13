@@ -27,3 +27,4 @@ pyqt
 mayavi
 hyperopt
 pylint
+albumentations
