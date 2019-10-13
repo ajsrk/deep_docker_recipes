@@ -58,7 +58,7 @@ EXPOSE 8888
 ADD . /
 
 RUN apt-get update --fix-missing && \
-   apt-get install -y --no-install-recommends wget bzip2 ca-certificates \
+   apt-get install -y --no-install-recommends --allow-downgrades wget bzip2 ca-certificates \
    mesa-utils libglu1-mesa libqtgui4 \
    git \
    build-essential cmake curl vim ca-certificates \

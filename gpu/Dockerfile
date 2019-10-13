@@ -67,7 +67,7 @@ ADD . /
 RUN echo "deb http://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1604/x86_64 /" > \ 
     /etc/apt/sources.list.d/nvidia-ml.list && \
     apt-get update --fix-missing && \
-    apt-get install -y --no-install-recommends --allow-change-held-packages \
+    apt-get install -y --no-install-recommends --allow-change-held-packages --allow-downgrades \
     wget bzip2 ca-certificates \
     mesa-utils libglu1-mesa libqtgui4 \
     git \
