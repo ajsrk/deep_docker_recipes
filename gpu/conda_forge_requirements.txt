@@ -28,3 +28,6 @@ mayavi
 hyperopt
 pylint
 albumentations
+xlrd
+flask
+dash
