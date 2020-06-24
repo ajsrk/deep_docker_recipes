@@ -138,7 +138,7 @@ WORKDIR /home/coder/project
 
 #ENTRYPOINT ["dumb-init", "code-server"]
 
-CMD [ "/bin/bash" ]
-
 #ENTRYPOINT ["/etc/pycharm/bin/pycharm.sh"]
+#ENTRYPOINT ["code-server --password secret"]
 
+CMD [ "/bin/bash" ]
