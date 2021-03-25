@@ -7,7 +7,7 @@ scikit-image==0.14.0
 jsoncpp==1.8.4
 tensorboardX==1.4
 opencv==3.4.3
-PyYAML==3.13
+PyYAML==5.4
 mkl_fft==1.0.6
 mkl_random==1.0.1
 jupyter==1.0.0
